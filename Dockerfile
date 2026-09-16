@@ -9,25 +9,28 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better Docker caching
+# Copy requirements first (for better caching)
 COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
+# Copy the rest of the application
 COPY . .
 
-# Create non-root user
-RUN useradd -m -u 1000 appuser && \
-    chown -R appuser:appuser /app
-
+# Create non-root user for security
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
-# Railway provides the PORT environment variable
+# Set environment variables
 ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
+# Default port to 8000, but Railway will automatically override this with its own $PORT
+ENV PORT=8000
 
-# Start Flask application with Gunicorn
-CMD ["sh", "-c", "exec gunicorn --bind 0.0.0.0:$PORT --workers 2 app:app"]
+# Expose the port (using the environment variable)
+EXPOSE ${PORT}
+
+# Run the application with gunicorn, binding to the dynamic PORT variable
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:$PORT --workers 2 app:app"]
