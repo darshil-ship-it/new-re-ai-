@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Pricing - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center mb-16">
+        <h1 class="text-4xl font-bold text-text mb-4">Simple, Transparent Pricing</h1>
+        <p class="text-xl text-muted">Choose the plan that fits your business. No hidden fees.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Monthly -->
+        <div class="bg-white p-8 rounded-2xl border border-border flex flex-col">
+            <h3 class="text-lg font-semibold text-text mb-2">Monthly</h3>
+            <div class="text-4xl font-bold text-text mb-1">₹299<span class="text-lg text-muted font-normal">/mo</span></div>
+            <p class="text-muted text-sm mb-6">Billed monthly</p>
+            <ul class="space-y-3 mb-8 flex-grow">
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Unlimited QR Scans</li>
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> AI Review Generation</li>
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Basic Analytics</li>
+            </ul>
+            <a href="/signup" class="block w-full text-center bg-white border border-primary text-primary hover:bg-green-50 py-2.5 rounded-lg font-medium transition">Choose Monthly</a>
+        </div>
+
+        <!-- 6 Months (Popular) -->
+        <div class="bg-white p-8 rounded-2xl border-2 border-primary shadow-lg flex flex-col relative transform md:-translate-y-4">
+            <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+            <h3 class="text-lg font-semibold text-text mb-2">6 Months</h3>
+            <div class="text-4xl font-bold text-text mb-1">1499<span class="text-lg text-muted font-normal">/6mo</span></div>
+            <p class="text-muted text-sm mb-6">Save 16%</p>
+            <ul class="space-y-3 mb-8 flex-grow">
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Everything in Monthly</li>
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Priority Support</li>
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Advanced Analytics</li>
+            </ul>
+            <a href="/signup" class="block w-full text-center bg-primary hover:bg-primary-hover text-white py-2.5 rounded-lg font-medium transition">Choose 6 Months</a>
+        </div>
+
+        <!-- Yearly -->
+        <div class="bg-white p-8 rounded-2xl border border-border flex flex-col">
+            <h3 class="text-lg font-semibold text-text mb-2">Yearly</h3>
+            <div class="text-4xl font-bold text-text mb-1">2499<span class="text-lg text-muted font-normal">/yr</span></div>
+            <p class="text-muted text-sm mb-6">Save 44%</p>
+            <ul class="space-y-3 mb-8 flex-grow">
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Everything in 6 Months</li>
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Dedicated Account Manager</li>
+                <li class="flex items-center text-text"><span class="text-primary mr-2">✓</span> Custom Branding</li>
+            </ul>
+            <a href="/signup" class="block w-full text-center bg-white border border-primary text-primary hover:bg-green-50 py-2.5 rounded-lg font-medium transition">Choose Yearly</a>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="max-w-3xl mx-auto mt-20">
+        <h2 class="text-3xl font-bold text-text text-center mb-8">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            <div class="bg-white p-6 rounded-xl border border-border">
+                <h3 class="font-semibold text-text mb-2">Can I change my plan later?</h3>
+                <p class="text-muted">Yes, you can upgrade your plan at any time.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl border border-border">
+                <h3 class="font-semibold text-text mb-2">What payment methods do you accept?</h3>
+                <p class="text-muted">We accept all major credit cards, debit cards, UPI, and net banking through our secure payment provider Razorpay.</p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

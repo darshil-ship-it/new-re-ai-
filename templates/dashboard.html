@@ -1,0 +1,236 @@
+{% extends "dashboard_base.html" %}
+{% block title %}Dashboard Overview - My-Review-AI{% endblock %}
+{% block content %}
+
+<!-- ALERTS SECTION (Owner Warnings) -->
+{% if alerts %}
+<div class="mb-6 space-y-3">
+    {% for alert in alerts %}
+    <div class="p-4 rounded-lg border-l-4 shadow-sm flex justify-between items-start
+        {% if alert.alert_type == 'urgent' %}bg-red-50 border-red-500 text-red-800
+        {% elif alert.alert_type == 'warning' %}bg-yellow-50 border-yellow-500 text-yellow-800
+        {% else %}bg-blue-50 border-blue-500 text-blue-800{% endif %}">
+        <div>
+            <p class="font-bold text-sm uppercase mb-1">{{ alert.alert_type }} Notification</p>
+            <p class="text-sm">{{ alert.message }}</p>
+        </div>
+        <span class="text-xs opacity-75 whitespace-nowrap ml-4">{{ alert.created_at[:10] }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="max-w-7xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-text">Dashboard Overview</h1>
+        <p class="text-muted mt-1">Welcome back, {{ current_profile.full_name or current_profile.email }}!</p>
+    </div>
+
+    {% if not business_exists %}
+    <!-- No Business Setup Yet -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
+        <div class="flex items-start">
+            <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div class="ml-3 flex-1">
+                <h3 class="text-lg font-medium text-blue-800">Setup your business to get started</h3>
+                <p class="mt-1 text-sm text-blue-700">You need to create your business profile before you can generate QR codes and collect reviews.</p>
+                <div class="mt-4">
+                    <a href="/business/setup" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-hover focus:outline-none">
+                        Create Business
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+
+    <!-- Subscription Alert -->
+    {% if not subscription %}
+    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-8">
+        <h3 class="text-lg font-medium text-yellow-800">No Active Subscription</h3>
+        <p class="mt-1 text-sm text-yellow-700">Choose a plan to unlock AI review generation and QR codes.</p>
+        <a href="/subscription" class="mt-4 inline-block bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-yellow-700">View Plans</a>
+    </div>
+    {% endif %}
+
+    <!-- Metrics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Metric 1: Business Name -->
+        <div class="bg-white p-6 rounded-xl border border-border shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-medium text-muted">Business Name</h3>
+                <span class="p-2 bg-green-100 rounded-lg text-primary">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                </span>
+            </div>
+            <p class="text-2xl font-bold text-text truncate">{{ business.business_name }}</p>
+            <p class="text-xs text-muted mt-1">{{ business.location or 'Location not set' }}</p>
+        </div>
+
+        <!-- Metric 2: Subscription Status -->
+        <div class="bg-white p-6 rounded-xl border border-border shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-medium text-muted">Subscription</h3>
+                <span class="p-2 bg-blue-100 rounded-lg text-blue-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </span>
+            </div>
+            {% if subscription %}
+            <p class="text-2xl font-bold text-text">Active</p>
+            <p class="text-xs text-muted mt-1">Expires: {{ subscription.end_date[:10] if subscription.end_date else 'N/A' }}</p>
+            {% if subscription.days_remaining is defined %}
+            <p class="text-xs text-primary mt-1 font-medium">{{ subscription.days_remaining }} days remaining</p>
+            {% endif %}
+            {% else %}
+            <p class="text-2xl font-bold text-danger">Inactive</p>
+            <p class="text-xs text-muted mt-1">No plan selected</p>
+            {% endif %}
+        </div>
+
+        <!-- Metric 3: Reviews Generated -->
+        <div class="bg-white p-6 rounded-xl border border-border shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-medium text-muted">Reviews Generated</h3>
+                <span class="p-2 bg-purple-100 rounded-lg text-purple-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                </span>
+            </div>
+            <p class="text-2xl font-bold text-text">{{ reviews_count or 0 }}</p>
+            <p class="text-xs text-muted mt-1">AI polished reviews in pool</p>
+        </div>
+
+        <!-- Metric 4: QR Code Scans -->
+        <div class="bg-white p-6 rounded-xl border border-border shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-medium text-muted">QR Code Scans</h3>
+                <span class="p-2 bg-orange-100 rounded-lg text-orange-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                    </svg>
+                </span>
+            </div>
+            <p class="text-2xl font-bold text-text">{{ qr_scans or 0 }}</p>
+            <p class="text-xs text-muted mt-1">Total customer page views</p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-xl border border-border p-6 shadow-sm">
+        <h2 class="text-lg font-semibold text-text mb-4">Quick Actions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Edit Business -->
+            <a href="/business" class="flex items-center p-4 border border-border rounded-lg hover:bg-surface transition">
+                <div class="w-10 h-10 bg-green-100 text-primary rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-medium text-text">Edit Business</p>
+                    <p class="text-xs text-muted">Update your profile details</p>
+                </div>
+            </a>
+
+            <!-- Manage Plan -->
+            <a href="/subscription" class="flex items-center p-4 border border-border rounded-lg hover:bg-surface transition">
+                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-medium text-text">Manage Plan</p>
+                    <p class="text-xs text-muted">Upgrade or renew subscription</p>
+                </div>
+            </a>
+
+            <!-- Get QR Code -->
+            <a href="/qr" class="flex items-center p-4 border border-border rounded-lg hover:bg-surface transition">
+                <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-medium text-text">Get QR Code</p>
+                    <p class="text-xs text-muted">Generate your QR code</p>
+                </div>
+            </a>
+
+            <!-- Generate AI Reviews -->
+            <div class="flex items-center p-4 border border-border rounded-lg hover:bg-surface transition cursor-pointer" onclick="generateAIPool()">
+                <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-medium text-text">Generate AI Reviews</p>
+                    <p class="text-xs text-muted">Create 60 polished suggestions</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+
+<!-- JavaScript for AI Generation -->
+<script>
+async function generateAIPool() {
+    if(!confirm("This will use AI to generate 60 review suggestions for your business. It may take 10-15 seconds. Continue?")) return;
+    
+    const btn = event.currentTarget;
+    const originalHTML = btn.innerHTML;
+    
+    // Show loading state
+    btn.innerHTML = `
+        <div class="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <svg class="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </div>
+        <div>
+            <p class="font-medium text-text">Generating...</p>
+            <p class="text-xs text-muted">Please wait ~15 seconds</p>
+        </div>
+    `;
+    btn.style.pointerEvents = 'none';
+    btn.style.opacity = '0.7';
+
+    try {
+        const response = await fetch('/api/generate-pool', { method: 'POST' });
+        const data = await response.json();
+        
+        if (data.success) {
+            alert(data.message);
+            window.location.reload();
+        } else {
+            alert('Error: ' + (data.error || 'Unknown error occurred'));
+            btn.innerHTML = originalHTML;
+            btn.style.pointerEvents = 'auto';
+            btn.style.opacity = '1';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to connect to server. Please try again.');
+        btn.innerHTML = originalHTML;
+        btn.style.pointerEvents = 'auto';
+        btn.style.opacity = '1';
+    }
+}
+</script>
+{% endblock %}

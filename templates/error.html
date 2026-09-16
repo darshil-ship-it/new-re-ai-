@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Error {{ error_code }} - My-Review-AI{% endblock %}
+{% block content %}
+<div class="min-h-[60vh] flex items-center justify-center px-4">
+    <div class="text-center">
+        <h1 class="text-9xl font-extrabold text-primary opacity-20">{{ error_code }}</h1>
+        <h2 class="text-3xl font-bold text-text mt-[-40px] mb-4">{{ error_message }}</h2>
+        <p class="text-muted mb-8 max-w-md mx-auto">
+            {% if error_code == 404 %}
+                The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+            {% elif error_code == 403 %}
+                You do not have permission to access this resource.
+            {% else %}
+                Something went wrong on our end. Our team has been notified.
+            {% endif %}
+        </p>
+        <a href="/" class="inline-block bg-primary hover:bg-primary-hover text-white font-medium py-2.5 px-6 rounded-lg transition">
+            Go Back Home
+        </a>
+    </div>
+</div>
+{% endblock %}

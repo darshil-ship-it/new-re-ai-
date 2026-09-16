@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Payment Successful - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="bg-white rounded-xl border border-border p-8 text-center">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-text mb-4">Payment Successful!</h1>
+        <p class="text-muted text-lg mb-8">Your subscription has been activated. You can now access all premium features.</p>
+        
+        <div class="bg-surface rounded-lg p-6 mb-8">
+            <h2 class="text-lg font-semibold text-text mb-4">What's Next?</h2>
+            <ul class="text-left space-y-3 text-text">
+                <li class="flex items-start">
+                    <span class="text-primary mr-2">1.</span>
+                    <span>Generate your QR code from the dashboard</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-primary mr-2">2.</span>
+                    <span>Place it at your business location</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-primary mr-2">3.</span>
+                    <span>Start collecting AI-powered reviews!</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/dashboard" class="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-lg font-medium transition">
+                Go to Dashboard
+            </a>
+            <a href="/business" class="bg-white border border-border text-text hover:bg-surface px-8 py-3 rounded-lg font-medium transition">
+                View Business
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Setup Tutorial - My-Review-AI{% endblock %}
+{% block content %}
+<div class="bg-gray-50 py-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+        <!-- Header -->
+        <div class="mb-12">
+            <h1 class="text-5xl font-bold text-text mb-4">Setup Tutorial</h1>
+            <p class="text-xl text-muted max-w-2xl mx-auto">Watch our step-by-step guide to get started with My-Review-AI in minutes</p>
+        </div>
+
+        <!-- YouTube Watch Button -->
+        <div class="bg-white p-12 rounded-2xl shadow-lg border border-border mb-12">
+            <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-text mb-4">Watch the Setup Tutorial</h2>
+            <p class="text-muted mb-8 max-w-lg mx-auto">Learn how to set up your account, create your business profile, generate QR codes, and start collecting reviews in just a few minutes.</p>
+            
+            <a href="https://www.youtube.com/watch?v=sZrTJesvJeo&list=RDsZrTJesvJeo&start_radio=1" target="_blank" 
+               class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg">
+                <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                Watch on YouTube
+            </a>
+            <p class="text-sm text-muted mt-4">Opens in a new tab</p>
+        </div>
+
+        <!-- Step by Step Guide -->
+        <div class="text-left mb-12">
+            <h2 class="text-3xl font-bold text-text text-center mb-8">What You'll Learn</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-border">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="text-lg font-bold text-primary">1</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-text mb-2">Create Your Account</h3>
+                            <p class="text-muted text-sm">Sign up for free and verify your email address. No credit card required to get started.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-border">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="text-lg font-bold text-primary">2</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-text mb-2">Setup Your Business</h3>
+                            <p class="text-muted text-sm">Add your business name, location, and connect your Google Business Profile review link.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-border">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="text-lg font-bold text-primary">3</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-text mb-2">Generate QR Code</h3>
+                            <p class="text-muted text-sm">Download your custom QR code and place it on receipts, tables, or business cards.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-border">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="text-lg font-bold text-primary">4</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-text mb-2">Start Collecting Reviews</h3>
+                            <p class="text-muted text-sm">Customers scan the QR code and our AI helps them write better reviews automatically.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="bg-primary text-white p-10 rounded-2xl">
+            <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+            <p class="text-lg mb-6 opacity-90">Join thousands of businesses using My-Review-AI today</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/signup" class="inline-block bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition">
+                    Start My Review Ai
+                </a>
+                <a href="/contact" class="inline-block bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-lg font-semibold transition">
+                    Contact Support
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

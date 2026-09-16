@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Use Cases - My-Review-AI{% endblock %}
+{% block content %}
+<div class="bg-gray-50 py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold text-text mb-4">Use Cases</h1>
+            <p class="text-xl text-muted max-w-2xl mx-auto">See how different industries use My-Review-AI to collect more reviews</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Restaurants & Cafes -->
+            <div class="bg-white p-8 rounded-xl border border-border shadow-sm hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-text mb-3">Restaurants & Cafes</h3>
+                <p class="text-muted mb-4">Place QR codes on tables, receipts, or takeout bags. Make it easy for happy customers to share their dining experience while it's fresh in their mind.</p>
+                <ul class="space-y-2 text-muted">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Table tents and menu inserts
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Receipt QR codes
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Takeout packaging
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Healthcare -->
+            <div class="bg-white p-8 rounded-xl border border-border shadow-sm hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-text mb-3">Healthcare & Wellness</h3>
+                <p class="text-muted mb-4">Help patients and clients share their healing journey. Perfect for clinics, dentists, therapists, and wellness centers.</p>
+                <ul class="space-y-2 text-muted">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Post-appointment follow-ups
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Waiting room displays
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Email signatures
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Retail -->
+            <div class="bg-white p-8 rounded-xl border border-border shadow-sm hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-text mb-3">Retail & E-commerce</h3>
+                <p class="text-muted mb-4">Turn satisfied shoppers into brand advocates. Collect reviews at the point of sale or after delivery.</p>
+                <ul class="space-y-2 text-muted">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        In-store displays
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Product packaging
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Post-purchase emails
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Professional Services -->
+            <div class="bg-white p-8 rounded-xl border border-border shadow-sm hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-text mb-3">Professional Services</h3>
+                <p class="text-muted mb-4">Build trust and credibility with client testimonials. Ideal for lawyers, accountants, consultants, and real estate agents.</p>
+                <ul class="space-y-2 text-muted">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Business cards
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Client portals
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-primary mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Proposal documents
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

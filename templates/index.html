@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}My-Review-AI - AI-Powered Review Assistant{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-to-b from-gray-50 to-white py-20 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+        <div class="inline-block bg-green-100 text-primary px-4 py-1 rounded-full text-sm font-semibold mb-6">
+            AI-Powered Review Assistant
+        </div>
+        <h1 class="text-5xl md:text-6xl font-bold text-text mb-6 leading-tight">
+            Turn Genuine Customer Feedback<br>
+            Into <span class="text-primary">Better Reviews</span>
+        </h1>
+        <p class="text-xl text-muted mb-10 max-w-3xl mx-auto">
+            Help your customers express their real experience clearly and naturally with AI-powered review assistance. Simple, fast, and customer-friendly.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <a href="/signup" class="bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg">
+                Get Started 
+            </a>
+            <a href="#how-it-works" class="bg-white hover:bg-gray-50 text-text border-2 border-border px-8 py-4 rounded-lg font-semibold text-lg transition">
+                See How It Works
+            </a>
+        </div>
+
+        <!-- Demo Preview -->
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-3xl mx-auto border border-border">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">M</div>
+                <div>
+                    <h3 class="font-bold text-text text-lg">Joe's Coffee Shop</h3>
+                    <p class="text-muted">How was your experience?</p>
+                </div>
+            </div>
+            <div class="flex gap-1 mb-4">
+                <span class="text-2xl">⭐</span>
+                <span class="text-2xl">⭐</span>
+                <span class="text-2xl">⭐</span>
+                <span class="text-2xl">⭐</span>
+                <span class="text-2xl">⭐</span>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg mb-4 text-left">
+                <p class="text-text">"Absolutely loved the cozy atmosphere and the friendly staff! The coffee was perfectly brewed. Highly recommend visiting."</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="flex-1 bg-primary text-white py-3 rounded-lg font-semibold"></button>
+                <button class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div id="features" class="py-20 px-4 bg-white">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-text mb-4">Why Choose My-Review-AI?</h2>
+        <p class="text-xl text-muted text-center mb-16">Everything you need to collect and manage customer reviews</p>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-gray-50 p-8 rounded-xl border border-border hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-text mb-3">AI-Powered Suggestions</h3>
+                <p class="text-muted">Smart AI helps customers write better, more detailed reviews in seconds.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-8 rounded-xl border border-border hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-text mb-3">QR Code Generation</h3>
+                <p class="text-muted">Easy-to-scan QR codes for your business cards, receipts, and storefront.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-8 rounded-xl border border-border hover:shadow-lg transition">
+                <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-text mb-3">Analytics Dashboard</h3>
+                <p class="text-muted">Track review performance, customer satisfaction, and engagement metrics.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works -->
+<div id="how-it-works" class="py-20 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-text mb-4">How It Works</h2>
+        <p class="text-xl text-muted text-center mb-16">Get started in minutes, not days</p>
+        
+        <div class="grid md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+                <h3 class="font-bold text-text mb-2">Sign Up</h3>
+                <p class="text-muted text-sm">Create your account in seconds</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+                <h3 class="font-bold text-text mb-2">Setup Business</h3>
+                <p class="text-muted text-sm">Add your business details and Google Review link</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+                <h3 class="font-bold text-text mb-2">Get QR Code</h3>
+                <p class="text-muted text-sm">Download and share your unique QR code</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">4</div>
+                <h3 class="font-bold text-text mb-2">Collect Reviews</h3>
+                <p class="text-muted text-sm">Watch your reviews grow automatically</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

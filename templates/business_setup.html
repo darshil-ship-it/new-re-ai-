@@ -1,0 +1,126 @@
+{% extends "dashboard_base.html" %}
+{% block title %}Setup Your Business - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg shadow-md border border-border p-8">
+        <h1 class="text-3xl font-bold text-primary mb-2">Setup Your Business</h1>
+        <p class="text-muted mb-8">Tell us about your business so we can customize your review collection experience.</p>
+        
+        <form action="/business/create" method="POST" class="space-y-6">
+            <!-- Business Name -->
+            <div>
+                <label for="business_name" class="block text-sm font-medium text-text mb-1">Business Name <span class="text-danger">*</span></label>
+                <input type="text" name="business_name" id="business_name" required 
+                       class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                       placeholder="e.g., ABC Dental Clinic">
+            </div>
+            
+            <!-- Location -->
+            <div>
+                <label for="location" class="block text-sm font-medium text-text mb-1">Business Location</label>
+                <input type="text" name="location" id="location" 
+                       class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                       placeholder="e.g., Mumbai, India">
+            </div>
+            
+            <!-- Industry -->
+            <div>
+                <label for="industry_id" class="block text-sm font-medium text-text mb-1">Industry <span class="text-danger">*</span></label>
+                <select name="industry_id" id="industry_id" required 
+                        class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option value="">Select Industry</option>
+                    {% for industry in industries %}
+                    <option value="{{ industry.id }}">{{ industry.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <!-- Business Type -->
+            <div>
+                <label for="business_type_id" class="block text-sm font-medium text-text mb-1">Business Type</label>
+                <select name="business_type_id" id="business_type_id" 
+                        class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option value="">Select Business Type</option>
+                    <option value="other">Other</option>
+                </select>
+                <p class="text-xs text-muted mt-1">Select "Other" to specify a custom type</p>
+            </div>
+            
+            <!-- Custom Business Type (hidden by default) -->
+            <div id="custom_type_div" class="hidden">
+                <label for="custom_business_type" class="block text-sm font-medium text-text mb-1">Specify Your Business Type</label>
+                <input type="text" name="custom_business_type" id="custom_business_type" 
+                       class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                       placeholder="e.g., Pediatric Dentistry">
+            </div>
+            
+            <!-- Google Review URL -->
+            <div>
+                <label for="google_review_url" class="block text-sm font-medium text-text mb-1">Google Review URL</label>
+                <input type="url" name="google_review_url" id="google_review_url" 
+                       class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                       placeholder="https://g.page/your-business/review">
+                <p class="text-xs text-muted mt-1">We'll direct customers here after they write their review</p>
+            </div>
+            
+            <!-- Keywords -->
+            <div>
+                <label for="keywords" class="block text-sm font-medium text-text mb-1">Keywords</label>
+                <textarea name="keywords" id="keywords" rows="2" 
+                          class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                          placeholder="e.g., professional, friendly, clean, fast service"></textarea>
+                <p class="text-xs text-muted mt-1">Comma-separated keywords describing your business</p>
+            </div>
+            
+            <!-- Description -->
+            <div>
+                <label for="description" class="block text-sm font-medium text-text mb-1">Business Description</label>
+                <textarea name="description" id="description" rows="4" 
+                          class="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                          placeholder="Describe your business, services, and what makes you special..."></textarea>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white font-medium py-3 px-4 rounded-md transition">
+                    Create Business
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Show/hide custom business type field
+document.getElementById('business_type_id').addEventListener('change', function() {
+    const customDiv = document.getElementById('custom_type_div');
+    if (this.value === 'other') {
+        customDiv.classList.remove('hidden');
+        document.getElementById('custom_business_type').required = true;
+    } else {
+        customDiv.classList.add('hidden');
+        document.getElementById('custom_business_type').required = false;
+    }
+});
+
+// Filter business types based on selected industry
+document.getElementById('industry_id').addEventListener('change', function() {
+    const industryId = this.value;
+    const businessTypeSelect = document.getElementById('business_type_id');
+    
+    // Clear existing options except "Other"
+    businessTypeSelect.innerHTML = '<option value="">Select Business Type</option><option value="other">Other</option>';
+    
+    // Add filtered business types
+    const allTypes = {{ business_types | tojson }};
+    const filteredTypes = allTypes.filter(type => type.industry_id === industryId);
+    
+    filteredTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type.id;
+        option.textContent = type.name;
+        businessTypeSelect.appendChild(option);
+    });
+});
+</script>
+{% endblock %}

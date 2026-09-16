@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review {{ business.business_name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#14532d', 'primary-hover': '#166534' } }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+        <!-- Header -->
+        <div class="bg-primary p-6 text-center text-white">
+            <h1 class="text-2xl font-bold mb-1">{{ business.business_name }}</h1>
+            <p class="text-green-100 text-sm">How was your experience?</p>
+        </div>
+
+        <div class="p-6">
+            <!-- Step 1: Star Rating -->
+            <div id="step-1" class="text-center">
+                <p class="text-gray-600 mb-6">Tap a star to rate your experience</p>
+                <div class="flex justify-center space-x-2 mb-8" id="star-container">
+                    <!-- Stars injected by JS -->
+                </div>
+                <button id="continue-btn" class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 rounded-xl transition opacity-50 cursor-not-allowed" disabled>
+                    Continue
+                </button>
+            </div>
+
+            <!-- Step 2: Suggestions -->
+            <div id="step-2" class="hidden">
+                <p class="text-gray-600 mb-4 text-center">Select a polished review to copy:</p>
+                <div id="suggestions-container" class="space-y-3 mb-6">
+                    <!-- Suggestions injected by JS -->
+                    <div class="text-center py-4">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                    </div>
+                </div>
+                
+                <a id="google-link" href="{{ business.google_review_url or '#' }}" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-center transition mb-3">
+                    Post on Google
+                </a>
+                <button onclick="location.reload()" class="block w-full text-gray-500 text-sm py-2 hover:text-gray-700 transition">
+                    Start Over
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const token = "{{ token }}";
+        let selectedRating = 0;
+
+        // Helper to log analytics events
+        async function logEvent(eventType, rating = null, reviewId = null) {
+            try {
+                await fetch('/api/analytics/event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        token: token, 
+                        event_type: eventType, 
+                        star_rating: rating,
+                        review_id: reviewId 
+                    })
+                });
+            } catch (e) {
+                console.error("Failed to log event", e);
+            }
+        }
+
+        // Log page view immediately on load
+        logEvent('page_view');
+
+        // Render Stars
+        const starContainer = document.getElementById('star-container');
+        for (let i = 1; i <= 5; i++) {
+            const star = document.createElement('button');
+            star.innerHTML = '★';
+            star.className = 'text-4xl text-gray-300 hover:text-yellow-400 transition focus:outline-none';
+            star.onclick = () => selectStar(i);
+            starContainer.appendChild(star);
+        }
+
+        function selectStar(rating) {
+            selectedRating = rating;
+            logEvent('star_selected', rating); // Log star selection
+            
+            const stars = starContainer.children;
+            for (let i = 0; i < 5; i++) {
+                stars[i].className = i < rating ? 'text-4xl text-yellow-400 transition focus:outline-none' : 'text-4xl text-gray-300 hover:text-yellow-400 transition focus:outline-none';
+            }
+            const btn = document.getElementById('continue-btn');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        document.getElementById('continue-btn').onclick = async function() {
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.remove('hidden');
+            logEvent('suggestion_viewed', selectedRating);
+
+            // Fetch suggestions from backend
+            try {
+                const res = await fetch('/api/review/suggestions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: token, star_rating: selectedRating })
+                });
+                const data = await res.json();
+                renderSuggestions(data.suggestions);
+            } catch (e) {
+                document.getElementById('suggestions-container').innerHTML = '<p class="text-red-500 text-center">Failed to load suggestions.</p>';
+            }
+        };
+
+        function renderSuggestions(suggestions) {
+            const container = document.getElementById('suggestions-container');
+            container.innerHTML = '';
+            
+            suggestions.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'bg-gray-50 border border-gray-200 p-4 rounded-xl relative group';
+                card.innerHTML = `
+                    <p class="text-gray-700 text-sm mb-3 pr-8">"${s.review_text}"</p>
+                    <button onclick="copyReview('${s.id}', this)" class="absolute top-3 right-3 bg-primary text-white text-xs px-3 py-1.5 rounded-lg hover:bg-primary-hover transition">
+                        Copy
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function copyReview(id, btn) {
+            const text = btn.previousElementSibling.innerText.replace(/"/g, '');
+            navigator.clipboard.writeText(text);
+            
+            btn.innerText = 'Copied!';
+            btn.classList.add('bg-green-600');
+            
+            // Log event and mark as used in backend
+            logEvent('review_copied', selectedRating, id);
+            
+            fetch('/api/review/select', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ review_id: id })
+            });
+            
+            setTimeout(() => {
+                btn.innerText = 'Copy';
+                btn.classList.remove('bg-green-600');
+            }, 2000);
+        }
+
+        // Log Google click when they click the blue button
+        document.getElementById('google-link').addEventListener('click', () => {
+            logEvent('google_clicked', selectedRating);
+        });
+    </script>
+</body>
+</html>

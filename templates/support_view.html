@@ -1,0 +1,43 @@
+{% extends "dashboard_base.html" if user_role == 'client' else "owner_base.html" %}
+{% block title %}Ticket: {{ ticket.subject }} - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto flex flex-col h-[calc(100vh-140px)]">
+    <!-- Header -->
+    <div class="bg-white p-4 rounded-t-xl border border-border border-b-0 flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold text-text">{{ ticket.subject }}</h1>
+            <p class="text-xs text-muted">Status: {{ ticket.status | replace('_', ' ') | capitalize }} | Priority: {{ ticket.priority | capitalize }}</p>
+        </div>
+        <a href="{{ '/owner/support' if user_role == 'owner' else '/support' }}" class="text-sm text-primary hover:text-primary-hover">← Back to List</a>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="flex-1 bg-surface p-6 overflow-y-auto space-y-4 border-x border-border">
+        {% for msg in messages %}
+        <div class="flex {% if msg.sender_role == 'owner' %}justify-start{% else %}justify-end{% endif %}">
+            <div class="max-w-[80%] rounded-lg p-4 {% if msg.sender_role == 'owner' %}bg-white border border-border text-text{% else %}bg-primary text-white{% endif %}">
+                <p class="text-sm mb-1">{{ msg.message }}</p>
+                <p class="text-xs {% if msg.sender_role == 'owner' %}text-muted{% else %}text-green-100{% endif %} text-right">{{ msg.created_at[11:16] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Reply Form -->
+    <div class="bg-white p-4 rounded-b-xl border border-border border-t-0">
+        <form action="{{ '/owner/support/' + ticket.id|string + '/message' if user_role == 'owner' else '/support/' + ticket.id|string + '/message' }}" method="POST" class="flex gap-3">
+            {% if user_role == 'owner' %}
+            <select name="status" class="px-3 py-2 border border-border rounded-md text-sm">
+                <option value="open" {% if ticket.status == 'open' %}selected{% endif %}>Open</option>
+                <option value="in_progress" {% if ticket.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="waiting" {% if ticket.status == 'waiting' %}selected{% endif %}>Waiting</option>
+                <option value="resolved" {% if ticket.status == 'resolved' %}selected{% endif %}>Resolved</option>
+                <option value="closed" {% if ticket.status == 'closed' %}selected{% endif %}>Closed</option>
+            </select>
+            {% endif %}
+            <input type="text" name="message" placeholder="Type your reply..." required class="flex-1 px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+            <button type="submit" class="bg-primary hover:bg-primary-hover text-white px-6 py-2 rounded-md font-medium transition">Send</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

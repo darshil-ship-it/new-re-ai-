@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Owner Dashboard - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-primary mb-2">Owner Dashboard</h1>
+    <p class="text-muted mb-8">Welcome, Administrator.</p>
+    
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-border">
+        <h2 class="text-xl font-semibold text-text mb-4">System Overview</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-4 bg-surface rounded-md border border-border">
+                <p class="text-sm text-muted">Role</p>
+                <p class="text-lg font-semibold text-danger capitalize">{{ current_profile.role }}</p>
+            </div>
+            <div class="p-4 bg-surface rounded-md border border-border">
+                <p class="text-sm text-muted">Status</p>
+                <p class="text-lg font-semibold text-success capitalize">{{ current_profile.status }}</p>
+            </div>
+            <div class="p-4 bg-surface rounded-md border border-border">
+                <p class="text-sm text-muted">Access Level</p>
+                <p class="text-lg font-semibold text-text">Full System Control</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

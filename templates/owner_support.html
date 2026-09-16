@@ -1,0 +1,39 @@
+{% extends "owner_base.html" %}
+{% block title %}Support Tickets - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <h1 class="text-2xl font-bold text-text mb-6">All Support Tickets</h1>
+
+    <div class="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+        <table class="min-w-full divide-y divide-border">
+            <thead class="bg-surface">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Subject</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Client</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Priority</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Date</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+                {% for ticket in tickets %}
+                <tr class="hover:bg-surface cursor-pointer" onclick="window.location.href='/owner/support/{{ ticket.id }}'">
+                    <td class="px-6 py-4 text-sm font-medium text-text">{{ ticket.subject }}</td>
+                    <td class="px-6 py-4 text-sm text-muted">{{ ticket.profiles.email if ticket.profiles else 'Unknown' }}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            {% if ticket.status == 'open' %}bg-blue-100 text-blue-800
+                            {% elif ticket.status == 'resolved' %}bg-green-100 text-green-800
+                            {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            {{ ticket.status | replace('_', ' ') | capitalize }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm capitalize text-muted">{{ ticket.priority }}</td>
+                    <td class="px-6 py-4 text-sm text-muted">{{ ticket.created_at[:10] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

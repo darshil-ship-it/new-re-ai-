@@ -1,0 +1,10 @@
+﻿Flask==3.0.0
+supabase==2.4.0
+python-dotenv==1.0.0
+gunicorn==21.2.0
+razorpay==1.4.1
+cohere==5.2.5
+qrcode[pil]==7.4.2
+Pillow>=10.0.0
+gotrue==2.5.0
+httpx==0.25.2

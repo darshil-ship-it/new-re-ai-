@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Help Center - My-Review-AI{% endblock %}
+{% block content %}
+<div class="bg-gray-50 py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold text-text mb-4">Help Center</h1>
+            <p class="text-xl text-muted">Find answers to common questions</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- FAQ Item 1 -->
+            <div class="bg-white rounded-xl border border-border overflow-hidden">
+                <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                    <span class="font-semibold text-text text-lg">How does the AI Review Assistant work?</span>
+                    <svg class="w-5 h-5 text-primary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="hidden px-6 pb-4 text-muted">
+                    <p>When a customer selects a star rating, our AI analyzes their input and provides intelligent suggestions to help them write a more detailed, helpful review. The AI never writes fake reviews—it simply helps customers express their genuine experience more clearly.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="bg-white rounded-xl border border-border overflow-hidden">
+                <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                    <span class="font-semibold text-text text-lg">Can I customize the QR code?</span>
+                    <svg class="w-5 h-5 text-primary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="hidden px-6 pb-4 text-muted">
+                    <p>Yes! You can download your QR code and use it on receipts, business cards, storefront signs, or anywhere you want to make it easy for customers to leave reviews.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="bg-white rounded-xl border border-border overflow-hidden">
+                <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                    <span class="font-semibold text-text text-lg">Is there credit card required?</span>
+                    <svg class="w-5 h-5 text-primary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="hidden px-6 pb-4 text-muted">
+                    <p>no ! We offer best servies on all plans. No credit card required. You can upgrade, downgrade, .</p>
+                </div>
+            </div>
+
+            
+
+            
+
+            <!-- FAQ Item 6 -->
+            <div class="bg-white rounded-xl border border-border overflow-hidden">
+                <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                    <span class="font-semibold text-text text-lg">How do I integrate with Google Reviews?</span>
+                    <svg class="w-5 h-5 text-primary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="hidden px-6 pb-4 text-muted">
+                    <p>During setup, simply provide your Google Business Profile review link. We'll guide you through finding it. Once connected, customers can click "Post on Google" to submit their review directly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 bg-white p-8 rounded-xl border border-border text-center">
+            <h2 class="text-2xl font-bold text-text mb-4">Still have questions?</h2>
+            <p class="text-muted mb-6">Can't find the answer you're looking for? We're here to help.</p>
+            <a href="/contact" class="inline-block bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-lg font-semibold transition">Contact Support</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleFaq(button) {
+    const content = button.nextElementSibling;
+    const arrow = button.querySelector('svg');
+    
+    content.classList.toggle('hidden');
+    if (content.classList.contains('hidden')) {
+        arrow.classList.remove('rotate-180');
+    } else {
+        arrow.classList.add('rotate-180');
+    }
+}
+</script>
+{% endblock %}

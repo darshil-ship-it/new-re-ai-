@@ -1,0 +1,52 @@
+{% extends "dashboard_base.html" %}
+{% block title %}QR Code - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold text-text mb-2">Your QR Code</h1>
+    <p class="text-muted mb-8">Print this QR code and place it at your counter, on receipts, or in emails.</p>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- QR Code Display -->
+        <div class="bg-white p-8 rounded-xl border border-border shadow-sm flex flex-col items-center justify-center text-center">
+            <img src="data:image/png;base64,{{ qr_image }}" alt="Business QR Code" class="w-64 h-64 mb-6 border-4 border-white shadow-lg rounded-lg">
+            <h2 class="text-xl font-bold text-text mb-1">{{ business.business_name }}</h2>
+            <p class="text-sm text-muted">Scan to leave a review</p>
+            
+            <div class="mt-6 flex gap-3 w-full">
+                <a href="data:image/png;base64,{{ qr_image }}" download="{{ business.business_name }}_qr.png" class="flex-1 bg-primary hover:bg-primary-hover text-white text-center py-2.5 rounded-lg font-medium transition">
+                    Download PNG
+                </a>
+            </div>
+        </div>
+        
+        <!-- Review Link & Instructions -->
+        <div class="bg-white p-8 rounded-xl border border-border shadow-sm">
+            <h3 class="text-lg font-semibold text-text mb-4">Your Unique Review Link</h3>
+            <div class="bg-surface p-3 rounded-lg border border-border flex items-center justify-between mb-6">
+                <code class="text-sm text-primary break-all mr-2">{{ review_url }}</code>
+                <button onclick="navigator.clipboard.writeText('{{ review_url }}'); alert('Link copied!')" class="text-primary hover:text-primary-hover font-medium text-sm whitespace-nowrap">Copy</button>
+            </div>
+            
+            <h3 class="text-lg font-semibold text-text mb-4">How to use it:</h3>
+            <ul class="space-y-3 text-muted text-sm">
+                <li class="flex items-start">
+                    <span class="bg-green-100 text-primary rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">1</span>
+                    <span>Download the QR code image above.</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-green-100 text-primary rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">2</span>
+                    <span>Print it and place it at your reception desk or checkout counter.</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-green-100 text-primary rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">3</span>
+                    <span>Customers scan it, select their star rating, and get AI-polished review text.</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-green-100 text-primary rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">4</span>
+                    <span>They copy the text and post it directly to your Google Business profile!</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

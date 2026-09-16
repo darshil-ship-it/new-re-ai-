@@ -1,0 +1,76 @@
+{% extends "owner_base.html" %}
+{% block title %}Lead Management - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-text">Lead Management</h1>
+        <button onclick="document.getElementById('add-lead-modal').classList.remove('hidden')" class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md text-sm font-medium">+ Add Lead</button>
+    </div>
+
+    <!-- Add Lead Modal (Simplified as inline form for MVP) -->
+    <div id="add-lead-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-xl w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4">Add New Lead</h2>
+            <form action="/owner/leads/create" method="POST" class="space-y-3">
+                <input type="text" name="name" placeholder="Name" required class="w-full px-3 py-2 border border-border rounded-md">
+                <input type="email" name="email" placeholder="Email" class="w-full px-3 py-2 border border-border rounded-md">
+                <input type="text" name="phone" placeholder="Phone" class="w-full px-3 py-2 border border-border rounded-md">
+                <input type="text" name="business_name" placeholder="Business Name" class="w-full px-3 py-2 border border-border rounded-md">
+                <textarea name="notes" placeholder="Notes" class="w-full px-3 py-2 border border-border rounded-md"></textarea>
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="document.getElementById('add-lead-modal').classList.add('hidden')" class="px-4 py-2 text-muted">Cancel</button>
+                    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md">Save Lead</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Leads Table -->
+    <div class="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+        <table class="min-w-full divide-y divide-border">
+            <thead class="bg-surface">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Name / Business</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Contact</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-muted uppercase">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+                {% for lead in leads %}
+                <tr>
+                    <td class="px-6 py-4">
+                        <div class="text-sm font-medium text-text">{{ lead.name }}</div>
+                        <div class="text-xs text-muted">{{ lead.business_name or '-' }}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-muted">
+                        {{ lead.email or '-' }}<br>{{ lead.phone or '-' }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            {% if lead.status == 'new' %}bg-blue-100 text-blue-800
+                            {% elif lead.status == 'interested' %}bg-yellow-100 text-yellow-800
+                            {% elif lead.status == 'converted' %}bg-green-100 text-green-800
+                            {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            {{ lead.status | capitalize }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <form action="/owner/leads/update/{{ lead.id }}" method="POST" class="flex gap-2">
+                            <select name="status" class="text-xs border border-border rounded px-2 py-1">
+                                <option value="new" {% if lead.status == 'new' %}selected{% endif %}>New</option>
+                                <option value="contacted" {% if lead.status == 'contacted' %}selected{% endif %}>Contacted</option>
+                                <option value="interested" {% if lead.status == 'interested' %}selected{% endif %}>Interested</option>
+                                <option value="converted" {% if lead.status == 'converted' %}selected{% endif %}>Converted</option>
+                                <option value="lost" {% if lead.status == 'lost' %}selected{% endif %}>Lost</option>
+                            </select>
+                            <button type="submit" class="text-xs bg-surface hover:bg-gray-200 px-2 py-1 rounded border border-border">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "dashboard_base.html" %}
+{% block title %}Support - My-Review-AI{% endblock %}
+{% block content %}
+<div class="max-w-5xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-text">Support Center</h1>
+        <button onclick="document.getElementById('new-ticket-modal').classList.remove('hidden')" class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md text-sm font-medium">+ New Ticket</button>
+    </div>
+
+    <!-- New Ticket Modal -->
+    <div id="new-ticket-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-xl w-full max-w-lg">
+            <h2 class="text-xl font-bold mb-4">Create Support Ticket</h2>
+            <form action="/support/create" method="POST" class="space-y-4">
+                <input type="text" name="subject" placeholder="Subject" required class="w-full px-3 py-2 border border-border rounded-md">
+                <select name="priority" class="w-full px-3 py-2 border border-border rounded-md">
+                    <option value="low">Low Priority</option>
+                    <option value="medium" selected>Medium Priority</option>
+                    <option value="high">High Priority</option>
+                    <option value="urgent">Urgent</option>
+                </select>
+                <textarea name="description" placeholder="Describe your issue..." rows="4" required class="w-full px-3 py-2 border border-border rounded-md"></textarea>
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="document.getElementById('new-ticket-modal').classList.add('hidden')" class="px-4 py-2 text-muted">Cancel</button>
+                    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md">Submit Ticket</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tickets List -->
+    <div class="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+        {% if tickets %}
+            {% for ticket in tickets %}
+            <a href="/support/{{ ticket.id }}" class="block p-6 border-b border-border hover:bg-surface transition last:border-b-0">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-medium text-text">{{ ticket.subject }}</h3>
+                        <p class="text-sm text-muted mt-1">Opened: {{ ticket.created_at[:10] }}</p>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            {% if ticket.status == 'open' %}bg-blue-100 text-blue-800
+                            {% elif ticket.status == 'resolved' %}bg-green-100 text-green-800
+                            {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            {{ ticket.status | replace('_', ' ') | capitalize }}
+                        </span>
+                        <span class="text-xs text-muted capitalize">{{ ticket.priority }} priority</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+            <div class="p-8 text-center text-muted">No support tickets yet.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
