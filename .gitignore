@@ -9,6 +9,8 @@ build/
 
 # Environment variables (NEVER upload this!)
 .env
+*.sqlite3
+
 
 # IDE files
 .vscode/
